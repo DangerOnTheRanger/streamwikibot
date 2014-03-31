@@ -9,6 +9,12 @@ streamwikibot is licensed under the 2-clause BSD license, of which
 a copy is included in the LICENSE file.
 
 
+Users
+-----
+
+* [/r/Fighters](http://reddit.com/r/Fighters) - the bot was originally created for that subreddit
+
+
 Requirements
 ------------
 
@@ -33,16 +39,24 @@ variables that control streamwikibot's behavior:
 * `sidebarpage`: What wiki page streamwikibot should write into the subreddit sidebar.
 * `sidebartag`: What portion of text in `sidebarpage` streamwikibot should replace with the stream list.
 * `aliaspage`: An optional list of aliases to replace game names with. If a game is not on the list, it will still be displayed in the sidebar.
+    The page should be formatted like this:
+
+        gamename1 # alias1
+
+        gamename2 # alias2
+
+        gamename3 # alias3
+
 * `wikipage`: The subreddit wiki page containing the list of streams to check. The page should be formatted
-  like this:
+    like this:
 
-      stream1
+        stream1
 
-      stream2
+        stream2
 
-      stream3
+        stream3
 
-  And so on.
+    And so on.
 
 Here's an example of a typical `config.ini` file:
 
