@@ -67,7 +67,7 @@ def update_sidebar(praw_instance, subreddit, streams, cutoff, sidebarpage, sideb
             game = aliases[stream.game]
         else:
             game = stream.game
-        streamtext.append(formatstr % {'name' : stream.name, 'game' : game, 'viewer_count' : stream.viewer_count, 'url' : stream.url})
+        streamtext.append(formatstr % {'name' : stream.name.rstrip(), 'game' : game, 'viewer_count' : stream.viewer_count, 'url' : stream.url})
     streamtext = '\n'.join(streamtext)
     sidebartext = praw_instance.get_subreddit(subreddit).get_wiki_page(sidebarpage).content_md
     sidebartext = sidebartext.replace(sidebartag, streamtext).replace('&gt;', '>')
