@@ -15,9 +15,14 @@ CONTENT_TYPE_ACCEPT = 'application/vnd.twitchtv.%s+json' % TWITCH_API_VERSION
 
 class Stream(object):
 
+    MAX_NAME_LEN = 15
+
     def __init__(self, name, viewer_count, game, url):
 
-        self.name = name
+        if len(name) > Stream.MAX_NAME_LEN:
+            self.name = name[:Stream.MAX_NAME_LEN] + '...'
+        else:
+            self.name = name
         self.viewer_count = viewer_count
         self.game = game
         self.url = url
@@ -49,7 +54,7 @@ def get_live_streams(praw_instance, subreddit, listpage, timeout):
             internal_name = stream['channel']['name']
             external_name = stream['channel']['display_name']
             stream_url = 'http://twitch.tv/%s' % internal_name
-            live_streams.append(Stream(external_name, viewer_count, game.strip('\r'), stream_url))
+            live_streams.append(Stream(external_name.rstrip(), viewer_count, game.strip('\r'), stream_url))
     live_streams.sort(lambda x, y: cmp(x.viewer_count, y.viewer_count), reverse=True)
 
     return live_streams
@@ -67,7 +72,7 @@ def update_sidebar(praw_instance, subreddit, streams, cutoff, sidebarpage, sideb
             game = aliases[stream.game]
         else:
             game = stream.game
-        streamtext.append(formatstr % {'name' : stream.name.rstrip(), 'game' : game, 'viewer_count' : stream.viewer_count, 'url' : stream.url})
+        streamtext.append(formatstr % {'name' : stream.name, 'game' : game, 'viewer_count' : stream.viewer_count, 'url' : stream.url})
     streamtext = '\n'.join(streamtext)
     sidebartext = praw_instance.get_subreddit(subreddit).get_wiki_page(sidebarpage).content_md
     sidebartext = sidebartext.replace(sidebartag, streamtext).replace('&gt;', '>')
