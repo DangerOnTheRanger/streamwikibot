@@ -77,7 +77,7 @@ def update_sidebar(praw_instance, subreddit, streams, cutoff, sidebarpage, sideb
     sidebartext = praw_instance.get_subreddit(subreddit).get_wiki_page(sidebarpage).content_md
     sidebartext = sidebartext.replace(sidebartag, streamtext).replace('&gt;', '>')
     title = praw_instance.get_subreddit(subreddit).get_settings()['title']
-    praw_instance.get_subreddit(subreddit).set_settings(title=title, description=sidebartext)
+    praw_instance.get_subreddit(subreddit).update_settings(title=title, description=sidebartext)
 
 
 def main():
