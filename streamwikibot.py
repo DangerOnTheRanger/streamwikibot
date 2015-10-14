@@ -65,7 +65,7 @@ def update_sidebar(praw_instance, subreddit, streams, cutoff, sidebarpage, sideb
     streamtext = []
     formatstr = '[**%(name)s**](%(url)s) | %(game)s | *%(viewer_count)d*'
     alias_lines = praw_instance.get_subreddit(subreddit).get_wiki_page(aliaspage).content_md.split('\n')
-    aliases = dict(s.strip('\r').split(' # ') for s in alias_lines if s != '\r')
+    aliases = dict(s.strip('\r').split(' # ') for s in alias_lines if s != '\r' and s != '')
 
     for stream in streams[:cutoff]:
         if stream.game in aliases:
